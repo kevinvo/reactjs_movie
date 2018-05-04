@@ -7,3 +7,6 @@
 .title-and-rating {
   font-weight: bold;
 }
+p.overview {
+  margin: 0px 50px 30px 50px;
+}
