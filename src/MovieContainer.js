@@ -19,8 +19,12 @@ export default class MovieContainer extends React.Component {
   }
 
   searchForMovie(searchQuery) {
-    const movieSearchQuery = `${this.props.movieSearchUrl}&query=${searchQuery}`;
-    this.loadData.bind(this)(movieSearchQuery);
+    if (searchQuery === '') {
+      this.loadData.bind(this)(this.props.movieFetchUrl);
+    } else {
+      const movieSearchQuery = `${this.props.movieSearchUrl}&query=${searchQuery}`;
+      this.loadData.bind(this)(movieSearchQuery);
+    }
     this.setState({searchQuery: searchQuery});
   }
 
