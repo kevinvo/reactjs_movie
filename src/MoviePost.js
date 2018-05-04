@@ -9,7 +9,6 @@ export default class MoviePost extends React.Component {
   }
 
   toggleElement(event) {
-    debugger;
   }
 
   render() {
