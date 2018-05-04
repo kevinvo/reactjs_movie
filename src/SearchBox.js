@@ -17,6 +17,7 @@ export default class SearchBox extends React.Component {
              name='search-query'
              className='search-query'
              value={this.props.searchQuery}
+             placeholder='Type in your search query'
              onChange={this.searchForMovie.bind(this)}/>
     );
   }
