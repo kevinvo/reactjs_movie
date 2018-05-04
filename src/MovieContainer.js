@@ -1,5 +1,6 @@
 import React from 'react';
 import MovieList from './MovieList';
+import SearchBox from './SearchBox';
 import fetchJsonp from 'fetch-jsonp';
 
 export default class MovieContainer extends React.Component {
@@ -7,19 +8,27 @@ export default class MovieContainer extends React.Component {
     super(props)
     this.state = {
       posts: {},
-      loading: true
+      loading: true,
+      searchQuery: ''
     };
+    this.searchHandler = this.searchForMovie.bind(this)
   }
 
   componentWillMount() {
-    this.loadData.bind(this)();
+    this.loadData.bind(this)(this.props.movieFetchUrl);
   }
 
-  loadData() {
+  searchForMovie(searchQuery) {
+    const movieSearchQuery = `${this.props.movieSearchUrl}&query=${searchQuery}`;
+    this.loadData.bind(this)(movieSearchQuery);
+    this.setState({searchQuery: searchQuery});
+  }
+
+  loadData(searchUrl) {
     this.setState({
       loading: true
     });
-    fetchJsonp(this.props.movieFetchUrl)
+    fetchJsonp(searchUrl)
       .then((data) => {
         return data.json();
       }).then((json) => {
@@ -33,9 +42,14 @@ export default class MovieContainer extends React.Component {
   render() {
     const movies = this.state.posts && this.state.posts.results;
     return (
-      <MovieList
-        movies={movies}
-        loading={this.state.loading} />
+      <div className='movie-container'>
+        <SearchBox
+          searchForMovie={this.searchHandler}
+          searchQuery={this.state.searchQuery} />
+        <MovieList
+          movies={movies}
+          loading={this.state.loading} />
+      </div>
     );
   }
 }
