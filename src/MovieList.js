@@ -1,24 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MoviePost from './MoviePost'
-import logo from './logo.svg'
 import './MovieList.css';
 
 export default class MovieList extends React.Component {
-
   render() {
     const movies = this.props.movies && this.props.movies.map((movie) => {
-      const movieObject = {title: movie.title,
-                     overview: movie.overview,
-                     vote_average: movie.vote_average,
-                     poster_path: movie.poster_path,
-                     key: movie.id };
-      return (<MoviePost movie={movieObject}/>);
+      return (<MoviePost key={movie.id} movie={movie}/>);
     });
     return (
       <div className='movie-list'>
-        <img hidden={!this.props.loading}/>
+        <img alt="movie_container" hidden={!this.props.loading}/>
         {movies}
       </div>
     );
   }
+}
+
+MovieList.propTypes = {
+  movies: PropTypes.array,
+  loading: PropTypes.bool,
 }
